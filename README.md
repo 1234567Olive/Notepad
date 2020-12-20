@@ -85,7 +85,7 @@
 
 【String[] dataColumns = { NotePad.Notes.COLUMN_NAME_TITLE, NotePad.Notes.COLUMN_NAME_MODIFICATION_DATE };】
 【int[] viewIDs = { android.R.id.text1, R.id.text1_date };】
-运行结果：如图：
+运行结果：如图：https://github.com/1234567Olive/Notepad/blob/master/1.JPG
 
 2.增加查询功能
 （1）在list_option_menu.xml中增加查询图标
@@ -181,5 +181,6 @@
         return true;
     }
 }】（查找功能函数）
-运行结果如下：  
+运行结果如下： https://github.com/1234567Olive/Notepad/blob/master/2.png
+https://github.com/1234567Olive/Notepad/blob/master/3.jpg
  
