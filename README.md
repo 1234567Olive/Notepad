@@ -2,7 +2,7 @@
 ----------
 
 ## 1.在老师给的基础代码上增加显示时间功能
-（1）首先在新增一个TextView显示时间（在布局文件noteslist_item.xml中添加）
+* （1）首先在新增一个TextView显示时间（在布局文件noteslist_item.xml中添加）
 
 	<TextView
 		android:id="@+id/text1—_notepad"
@@ -12,7 +12,7 @@
 		android:singleLine="true"
 	   android:gravity="center_vertical"
 
-(2)java提供的默认时间格式使用毫秒数进行表示，需要进行格式化。需要在NotePadProvider中的insert()进行修改，用于将时间修改为年月日表示方法。
+* (2)java提供的默认时间格式使用毫秒数进行表示，需要进行格式化。需要在NotePadProvider中的insert()进行修改，用于将时间修改为年月日表示方法。
   修改代码为：（修改部分用【】标注）
   
 	  【Long now = Long.valueOf(System.currentTimeMillis());
@@ -29,7 +29,7 @@
 		}
         
 
-（3）修改NoteEditor中的updateNote()方法，将时间进行格式化。
+* （3）修改NoteEditor中的updateNote()方法，将时间进行格式化。
 修改代码为：（修改部分用【】标注）
 
 	 private final void updateNote(String text, String title) {
@@ -52,7 +52,7 @@
 			    }
 			}
 		    }
- （4）在NotesList的onCreate函数中将获取到的时间进行赋值操作，并增加时间显示。
+ * （4）在NotesList的onCreate函数中将获取到的时间进行赋值操作，并增加时间显示。
  
 	 private static final String[] PROJECTION = new String[] {
 		    NotePad.Notes._ID, // 0
@@ -94,7 +94,7 @@
 运行结果：![运行结果](https://github.com/1234567Olive/Notepad/blob/master/1.JPG)
 
 ## 2.增加查询功能
-（1）在list_option_menu.xml中增加查询图标
+* （1）在list_option_menu.xml中增加查询图标
 
 	 <item
 		android:id="@+id/menu_search"
@@ -110,7 +110,7 @@
 			this.startActivity(intent);
 			return true;
  
- （3）新建NoteSearch.java，代码如下：
+ * （3）新建NoteSearch.java，代码如下：
  
 	 public class NoteSearch extends Activity implements SearchView.OnQueryTextListener{
 	   【ListView listview;//
@@ -156,12 +156,12 @@
                 }
             }
         });
-    }】（显示查找功能）
+	    }】（显示查找功能）
 
-	    @Override
-	  【 public boolean onQueryTextSubmit(String query) {
-		return true;
-	    }
+		    @Override
+		  【 public boolean onQueryTextSubmit(String query) {
+			return true;
+		    }
 
     @Override
     public boolean onQueryTextChange(String newText) {//实现模糊查询，通过标题或者内容进行查询
