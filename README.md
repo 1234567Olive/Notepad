@@ -103,7 +103,8 @@
 			android:title="search">
 		    </item>
 
-		 （2）在NotesList中找函数onOptionsItemSelected添加添加选择事件：
+ * （2）在NotesList中找函数onOptionsItemSelected添加添加选择事件：
+ 
 		 case R.id.menu_search:
 				Intent intent = new Intent();
 				intent.setClass(this, NoteSearch.class);
