@@ -4,13 +4,13 @@
 ## 1.增加显示时间功能
 * （1）首先在新增一个TextView显示时间（在布局文件noteslist_item.xml中添加）
 
-	<TextView
-		android:id="@+id/text1—_notepad"
-		android:layout_width="match_parent"
-		android:layout_height="wrap_content"
-		android:paddingLeft="5dip"
-		android:singleLine="true"
-	   android:gravity="center_vertical"
+		<TextView
+			android:id="@+id/text1—_notepad"
+			android:layout_width="match_parent"
+			android:layout_height="wrap_content"
+			android:paddingLeft="5dip"
+			android:singleLine="true"
+		   android:gravity="center_vertical"
 
 * (2)java提供的默认时间格式使用毫秒数进行表示，需要进行格式化。需要在NotePadProvider中的insert()进行修改，用于将时间修改为年月日表示方法。
   修改代码为：（修改部分用【】标注）
@@ -54,79 +54,79 @@
 		    }
  * （4）在NotesList的onCreate函数中将获取到的时间进行赋值操作，并增加时间显示。
  
-	 private static final String[] PROJECTION = new String[] {
-		    NotePad.Notes._ID, // 0
-		    NotePad.Notes.COLUMN_NAME_TITLE, // 1
-		    【NotePad.Notes.COLUMN_NAME_MODIFICATION_DATE,//日期】（增加日期的显示）
-	    };
-	    private static final int COLUMN_INDEX_TITLE = 1;
-	    @Override
-	    protected void onCreate(Bundle savedInstanceState) {
-		super.onCreate(savedInstanceState);
-		setDefaultKeyMode(DEFAULT_KEYS_SHORTCUT);
-		Intent intent = getIntent();
-		if (intent.getData() == null) {
-		    intent.setData(NotePad.Notes.CONTENT_URI);
-		}
-		getListView().setOnCreateContextMenuListener(this);
-		Cursor cursor = managedQuery(
-		    getIntent().getData(),
-		    PROJECTION,
-		    null,
-		    null,
-		    NotePad.Notes.DEFAULT_SORT_ORDER
-		);
-		String[] dataColumns = { NotePad.Notes.COLUMN_NAME_TITLE, NotePad.Notes.COLUMN_NAME_MODIFICATION_DATE } ;
-		int[] viewIDs = { android.R.id.text1,【 R.id.text1_date 】}
-		SimpleCursorAdapter adapter
-		    = new SimpleCursorAdapter(
-			      this,
-			      R.layout.noteslist_item,
-			      cursor,
-			      dataColumns,
-			      viewIDs
-		      );
-		setListAdapter(adapter);
-	    }
+		 private static final String[] PROJECTION = new String[] {
+			    NotePad.Notes._ID, // 0
+			    NotePad.Notes.COLUMN_NAME_TITLE, // 1
+			    【NotePad.Notes.COLUMN_NAME_MODIFICATION_DATE,//日期】（增加日期的显示）
+		    };
+		    private static final int COLUMN_INDEX_TITLE = 1;
+		    @Override
+		    protected void onCreate(Bundle savedInstanceState) {
+			super.onCreate(savedInstanceState);
+			setDefaultKeyMode(DEFAULT_KEYS_SHORTCUT);
+			Intent intent = getIntent();
+			if (intent.getData() == null) {
+			    intent.setData(NotePad.Notes.CONTENT_URI);
+			}
+			getListView().setOnCreateContextMenuListener(this);
+			Cursor cursor = managedQuery(
+			    getIntent().getData(),
+			    PROJECTION,
+			    null,
+			    null,
+			    NotePad.Notes.DEFAULT_SORT_ORDER
+			);
+			String[] dataColumns = { NotePad.Notes.COLUMN_NAME_TITLE, NotePad.Notes.COLUMN_NAME_MODIFICATION_DATE } ;
+			int[] viewIDs = { android.R.id.text1,【 R.id.text1_date 】}
+			SimpleCursorAdapter adapter
+			    = new SimpleCursorAdapter(
+				      this,
+				      R.layout.noteslist_item,
+				      cursor,
+				      dataColumns,
+				      viewIDs
+			      );
+			setListAdapter(adapter);
+		    }
 
-	【String[] dataColumns = { NotePad.Notes.COLUMN_NAME_TITLE, NotePad.Notes.COLUMN_NAME_MODIFICATION_DATE };】
-	【int[] viewIDs = { android.R.id.text1, R.id.text1_date };】
+		【String[] dataColumns = { NotePad.Notes.COLUMN_NAME_TITLE, NotePad.Notes.COLUMN_NAME_MODIFICATION_DATE };】
+		【int[] viewIDs = { android.R.id.text1, R.id.text1_date };】
 运行结果：![运行结果](https://github.com/1234567Olive/Notepad/blob/master/1.JPG)
 
 ## 2.增加查询功能
 * （1）在list_option_menu.xml中增加查询图标
 
-	 <item
-		android:id="@+id/menu_search"
-		android:icon="@android:drawable/ic_search_category_default"
-		android:showAsAction="always"
-		android:title="search">
-	    </item>
+		 <item
+			android:id="@+id/menu_search"
+			android:icon="@android:drawable/ic_search_category_default"
+			android:showAsAction="always"
+			android:title="search">
+		    </item>
 
-	 （2）在NotesList中找函数onOptionsItemSelected添加添加选择事件：
-	 case R.id.menu_search:
-			Intent intent = new Intent();
-			intent.setClass(this, NoteSearch.class);
-			this.startActivity(intent);
-			return true;
+		 （2）在NotesList中找函数onOptionsItemSelected添加添加选择事件：
+		 case R.id.menu_search:
+				Intent intent = new Intent();
+				intent.setClass(this, NoteSearch.class);
+				this.startActivity(intent);
+				return true;
  
  * （3）新建NoteSearch.java，代码如下：
  
-	 public class NoteSearch extends Activity implements SearchView.OnQueryTextListener{
-	   【ListView listview;//
-	    SQLiteDatabase sqLiteDatabase;
-	    private static final String[] PROJECTION = new String[] {
-		    NotePad.Notes._ID, // 0
-		    NotePad.Notes.COLUMN_NAME_TITLE, // 1
-		    NotePad.Notes.COLUMN_NAME_MODIFICATION_DATE
-	    };
-	    @Override
-	    protected void onCreate(Bundle savedInstanceState) {
-		super.onCreate(savedInstanceState);
-		requestWindowFeature(Window.FEATURE_NO_TITLE);
-		getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,WindowManager.LayoutParams.FLAG_FULLSCREEN);//设置全屏显示
-		super.setContentView(R.layout.note_search);
-		Intent intent = getIntent();
+		 public class NoteSearch extends Activity implements SearchView.OnQueryTextListener{
+		   【ListView listview;//
+		    SQLiteDatabase sqLiteDatabase;
+		    private static final String[] PROJECTION = new String[] {
+			    NotePad.Notes._ID, // 0
+			    NotePad.Notes.COLUMN_NAME_TITLE, // 1
+			    NotePad.Notes.COLUMN_NAME_MODIFICATION_DATE
+		    };
+		    @Override
+		    protected void onCreate(Bundle savedInstanceState) {
+			super.onCreate(savedInstanceState);
+			requestWindowFeature(Window.FEATURE_NO_TITLE);
+			getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,WindowManager.LayoutParams.FLAG_FULLSCREEN);//设置全屏显示
+			super.setContentView(R.layout.note_search);
+			Intent intent = getIntent();
 
         // If there is no data associated with the Intent, sets the data to the default URI, which
         // accesses a list of notes.
@@ -163,32 +163,32 @@
 			return true;
 		    }
 
-    @Override
-    public boolean onQueryTextChange(String newText) {//实现模糊查询，通过标题或者内容进行查询
-        Cursor cursor=sqLiteDatabase.query(
-                NotePad.Notes.TABLE_NAME,
-                PROJECTION,
-                NotePad.Notes.COLUMN_NAME_TITLE+" like ? or "+NotePad.Notes.COLUMN_NAME_NOTE+" like ?",
-                new String[]{"%"+newText+"%","%"+newText+"%"},
-                null,
-                null,
-                NotePad.Notes.DEFAULT_SORT_ORDER);
-        int[] viewIDs = { R.id.text3,R.id.text4};
-        // Creates the backing adapter for the ListView.
-        SimpleCursorAdapter adapter
-                = new SimpleCursorAdapter(
-                NoteSearch.this,                             // The Context for the ListView
-                R.layout.searchlist_item,          // Points to the XML for a list item
-                cursor,                           // The cursor to get items from
-                new String[]{NotePad.Notes.COLUMN_NAME_TITLE,NotePad.Notes.COLUMN_NAME_MODIFICATION_DATE},
-                viewIDs
-        );
+	    @Override
+	    public boolean onQueryTextChange(String newText) {//实现模糊查询，通过标题或者内容进行查询
+		Cursor cursor=sqLiteDatabase.query(
+			NotePad.Notes.TABLE_NAME,
+			PROJECTION,
+			NotePad.Notes.COLUMN_NAME_TITLE+" like ? or "+NotePad.Notes.COLUMN_NAME_NOTE+" like ?",
+			new String[]{"%"+newText+"%","%"+newText+"%"},
+			null,
+			null,
+			NotePad.Notes.DEFAULT_SORT_ORDER);
+		int[] viewIDs = { R.id.text3,R.id.text4};
+		// Creates the backing adapter for the ListView.
+		SimpleCursorAdapter adapter
+			= new SimpleCursorAdapter(
+			NoteSearch.this,                             // The Context for the ListView
+			R.layout.searchlist_item,          // Points to the XML for a list item
+			cursor,                           // The cursor to get items from
+			new String[]{NotePad.Notes.COLUMN_NAME_TITLE,NotePad.Notes.COLUMN_NAME_MODIFICATION_DATE},
+			viewIDs
+		);
 
         // Sets the ListView's adapter to be the cursor adapter that was just created.
         listview.setAdapter(adapter);
-        return true;
-    }
-	}】（查找功能函数）
+		return true;
+	    }
+		}】（查找功能函数）
 运行结果如下：![搜索结果1](https://github.com/1234567Olive/Notepad/blob/master/2.png)  
 	![搜索结果2](https://github.com/1234567Olive/Notepad/blob/master/3.jpg)
  
