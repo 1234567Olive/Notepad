@@ -32,15 +32,15 @@
 * （3）修改NoteEditor中的updateNote()方法，将时间进行格式化。
 修改代码为：（修改部分用【】标注）
 
-	 private final void updateNote(String text, String title) {
-		【ContentValues values = new ContentValues();
-		long now = System.currentTimeMillis();
-		Date date = new Date(now);
-		SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yy-MM-dd HH:mm:ss");
-		simpleDateFormat.setTimeZone(TimeZone.getTimeZone("GMT+08:00"));
-		String dateFormat = simpleDateFormat.format(date);
-		values.put(NotePad.Notes.COLUMN_NAME_MODIFICATION_DATE, dateFormat);】
-		if (mState == STATE_INSERT) {
+		 private final void updateNote(String text, String title) {
+			【ContentValues values = new ContentValues();
+			long now = System.currentTimeMillis();
+			Date date = new Date(now);
+			SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yy-MM-dd HH:mm:ss");
+			simpleDateFormat.setTimeZone(TimeZone.getTimeZone("GMT+08:00"));
+			String dateFormat = simpleDateFormat.format(date);
+			values.put(NotePad.Notes.COLUMN_NAME_MODIFICATION_DATE, dateFormat);】
+			if (mState == STATE_INSERT) {
 
 		    if (title == null) {
 			int length = text.length();
